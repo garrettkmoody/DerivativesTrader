@@ -13,7 +13,7 @@ def convert_to_numeric(value):
     
 
 # Load df1 from file1.csv
-df1 = pd.read_csv('GCPriceData.csv')
+df1 = pd.read_csv('HistoricalData/CommodityPrices/GoldPrices.csv')
 df1['Close'] = df1['Close'].apply(convert_to_numeric)
 
 # Load df2 from file2.csv
@@ -32,4 +32,4 @@ merged_df = pd.merge(merged_df, df5, on='Date', how='left')
 merged_df = pd.merge(merged_df, df6, on='Date', how='left')
 merged_df = pd.merge(merged_df, df7, on='Date', how='left')
 # Write merged_df to a new CSV file
-merged_df.to_csv('GCandDXY.csv', index=False)
+merged_df.to_csv('GCandExtra.csv', index=False)

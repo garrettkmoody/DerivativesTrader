@@ -4,27 +4,33 @@ from sklearn.model_selection import cross_val_score, train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 import joblib
+from config import COMMODITY_KEY, COMMODITY_TO_FEATURE_PROFILES_MAP
 
 def main():
-    csv_file = 'Train_dataset.csv'
+    csv_file = '../Train_dataset.csv'
     df = pd.read_csv(csv_file)
 
-    X = df[[
-            'RSI',
-            'MACD', 'Signal Line',
-            'RSI_LONG',
-            'Change_in_Prod_Merc_Long_All',
-            'Percent_PMPU_Long',
-            'Percent_MM_Long']]
+    commodityProfile = COMMODITY_TO_FEATURE_PROFILES_MAP[COMMODITY_KEY]
+
+    X = df[[feature for feature in commodityProfile.keys() if commodityProfile[feature]]]
+
+    print(X)
+    # X = df[[
+    #         'RSI',
+    #         'MACD', 'Signal Line',
+    #         'RSI_LONG',
+    #         'Change_in_Prod_Merc_Long_All',
+    #         'Percent_PMPU_Long',
+    #         'Percent_MM_Long']]
     
-    X= df[[
-                'RSI',
-                'MACD', 'Signal Line',
-                'Change_in_Swap_Spread_All'
-                ,'Change_in_Other_Rept_Spread_All',
-                'Percent_SWAP_Long',
-                'Percent_SWAP_Short',
-                'Percent_OR_Long']]
+    # X= df[[
+    #             'RSI',
+    #             'MACD', 'Signal Line',
+    #             'Change_in_Swap_Spread_All'
+    #             ,'Change_in_Other_Rept_Spread_All',
+    #             'Percent_SWAP_Long',
+    #             'Percent_SWAP_Short',
+    #             'Percent_OR_Long']]
 
     Y = df['PriceDifference']
 

@@ -68,12 +68,14 @@ def calculate_percent_traders(df):
     df['Percent_PMPU_Long'] = df['Traders_Prod_Merc_Long_All'] / df['Traders_Tot_All']
     df['Percent_PMPU_Short'] = df['Traders_Prod_Merc_Short_All'] / df['Traders_Tot_All']
     df['Percent_MM_Long'] = df['Traders_M_Money_Long_All'] / df['Traders_Tot_All']
-    df['Percent_MM_Short'] = df['Traders_Prod_Merc_Short_All'] / df['Traders_Tot_All']
+    df['Percent_MM_Short'] = df['Traders_M_Money_Short_All'] / df['Traders_Tot_All']
+    df['Percent_MM_Spread'] = df['Traders_M_Money_Spread_All'] / df['Traders_Tot_All']
     df['Percent_SWAP_Long'] = df['Traders_Swap_Long_All'] / df['Traders_Tot_All']
     df['Percent_SWAP_Short'] = df['Traders_Swap_Short_All'] / df['Traders_Tot_All']
     df['Percent_SWAP_Spread'] = df['Traders_Swap_Spread_All'] / df['Traders_Tot_All']
     df['Percent_OR_Long'] = df['Traders_Other_Rept_Long_All'] / df['Traders_Tot_All']
     df['Percent_OR_Short'] = df['Traders_Other_Rept_Short_All'] / df['Traders_Tot_All']
+    df['Percent_OR_Spread'] = df['Traders_Other_Rept_Spread_All'] / df['Traders_Tot_All']
     return df
 
 def find_next_monday(date):
@@ -108,7 +110,7 @@ def calculate_price_change(current_date, df2):
 
 # Load data from CSV files
 
-file2 = 'HistoricalData/NaturalGasPrices.csv'
+file2 = 'HistoricalData/CommodityPrices/NaturalGasPrices.csv'
 # file2 = 'GCandDXY.csv'
 
 cotCsvFiles = ['2024.csv', '2023.csv', '2022.csv', '2021.csv',
@@ -116,7 +118,7 @@ cotCsvFiles = ['2024.csv', '2023.csv', '2022.csv', '2021.csv',
             '2015.csv', '2014.csv', '2013.csv', '2012.csv',
             '2011.csv', '2010.csv', '2006-2009.csv']
 
-allDfs = [pd.read_csv(fileName) for fileName in cotCsvFiles]
+allDfs = [pd.read_csv("CotReports/" + fileName) for fileName in cotCsvFiles]
 df1 = pd.concat(allDfs, ignore_index=True)
 df2 = pd.read_csv(file2)
 
