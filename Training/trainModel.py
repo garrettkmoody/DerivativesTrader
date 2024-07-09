@@ -7,14 +7,12 @@ import joblib
 from config import COMMODITY_KEY, COMMODITY_TO_FEATURE_PROFILES_MAP
 
 def main():
-    csv_file = '../Train_dataset.csv'
+
+    csv_file = f'TrainData/{COMMODITY_KEY}_Train.csv'
     df = pd.read_csv(csv_file)
 
     commodityProfile = COMMODITY_TO_FEATURE_PROFILES_MAP[COMMODITY_KEY]
-
     X = df[[feature for feature in commodityProfile.keys() if commodityProfile[feature]]]
-
-    print(X)
     # X = df[[
     #         'RSI',
     #         'MACD', 'Signal Line',
