@@ -1,34 +1,29 @@
 
 import joblib
 import pandas as pd
+import sys
+sys.path.append('Training')
+from config import COMMODITY_TO_FEATURE_PROFILES_MAP
 
-
-loaded_model = joblib.load('currentModel.pkl')
-
-newDataDf = cotReport[['Pct_of_OI_Prod_Merc_Long_All','Pct_of_OI_Prod_Merc_Short_All',
-                'Pct_of_OI_M_Money_Long_All','Pct_of_OI_M_Money_Short_All','Pct_of_OI_M_Money_Spread_All',
-                'RSI', 'CloseDXY', 'MA', 'CloseCHINA', 'CloseRUSSIA', 'CloseAUS',
-                'MACD', 'Signal Line', 'Upper Band', 'Lower Band']]
-data = {
-    'Pct_of_OI_Prod_Merc_Long_All': [12],
-    'Pct_of_OI_Prod_Merc_Short_All': [12],
-    'Pct_of_OI_M_Money_Long_All': [12],
-    'Pct_of_OI_M_Money_Short_All': [12],
-    'Pct_of_OI_M_Money_Spread_All': [12],
-    'RSI': [12],
-    'CloseDXY': [12],
-    'MA': [12],
-    'CloseCHINA': [12],
-    'CloseRUSSIA': [12],
-    'CloseAUS': [12],
-    'MACD': [12],
-    'Signal Line': [12],
-    'Upper Band': [12],
-    'Lower Band': [12],
+models = {
+        "GOLD": joblib.load('Models/goldModel.pkl'),
+        "COPPER": joblib.load('Models/copperModel.pkl'),
+        "NATURALGAS": joblib.load('Models/naturalGasModel.pkl'),
 }
-df = pd.DataFrame(data)
 
-probs = loaded_model.predict_proba(newDataDf)
-print("Predictions:")
-print(probs)
-predictions = loaded_model.predict(newDataDf)[0]
+datasets = {
+    "GOLD": pd.read_csv('Training/BacktestData/GOLD_Backtest.csv'),
+    "COPPER": pd.read_csv('Training/BacktestData/COPPER_Backtest.csv'),
+    "NATURALGAS": pd.read_csv('Training/BacktestData/NATURALGAS_Backtest.csv'),
+}
+
+for key in ["GOLD","COPPER","NATURALGAS"]:
+    currentReport = datasets[key].iloc[[43]]
+    commodityProfile = COMMODITY_TO_FEATURE_PROFILES_MAP[key]
+    newDataDf = currentReport[[feature for feature in commodityProfile.keys() if commodityProfile[feature]]]
+    probs = models[key].predict_proba(newDataDf)
+    print(f"Predictions: {key}")
+    print(probs)
+    predictions = models[key].predict(newDataDf)[0]
+    print(predictions)
+    print("LONG" if predictions == 1 else "SHORT")

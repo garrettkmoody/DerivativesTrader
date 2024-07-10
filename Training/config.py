@@ -1,4 +1,4 @@
-COMMODITY_KEY = "NATURALGAS" # Always all caps
+COMMODITY_KEY = "COPPER" # Always all caps
 
 COMMODITY_TO_PRICE_FILE_MAP = {
     "GOLD": "GoldPrices.csv",
@@ -153,9 +153,9 @@ COMMODITY_TO_FEATURE_PROFILES_MAP = {
 
         'Change_in_Open_Interest_All': 0,
         'Change_in_Prod_Merc_Long_All': 1,
-        'Change_in_Prod_Merc_Short_All': 1,
+        'Change_in_Prod_Merc_Short_All': 0,
         'Change_in_M_Money_Long_All': 1,
-        'Change_in_M_Money_Short_All': 1,
+        'Change_in_M_Money_Short_All': 0,
         'Change_in_M_Money_Spread_All': 1,
         'Change_in_Swap_Long_All': 0,
         'Change_in_Swap_Short_All': 0,
