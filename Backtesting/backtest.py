@@ -1,4 +1,6 @@
 from datetime import timedelta
+import math
+import statistics
 import joblib
 import numpy as np
 import pandas as pd
@@ -7,7 +9,7 @@ sys.path.append('../Training')
 from config import COMMODITY_KEY, COMMODITY_TO_FEATURE_PROFILES_MAP
 
 class Trader:
-    def __init__(self, balance=20000):
+    def __init__(self, balance=30000):
         self.balance = balance
         self.contractsQueue = []
         self.percentGains = []
@@ -25,7 +27,7 @@ class Contract:
 def main():
 
     # Example start and end dates (replace with your actual dates)
-    start_date = '2021-07-02' 
+    start_date = '2021-07-23' 
     end_date = '2024-06-14'
     # Load your DataFrame from the CSV file
     # df1 = pd.read_csv('../Training/BacktestData/COPPER_Backtest.csv')
@@ -87,8 +89,10 @@ def main():
         # Lookup rows for current_date in the DataFrame
         if current_date.weekday() == 4:
             
+            averages = []
             for contract in trader.contractsQueue:
                 contract.weeksHeld += 1
+                # print(len([x for x in trader.contractsQueue if x.weeksHeld == 1]))
                 rows_for_current_date = pricesHistorical[contract.name][pricesHistorical[contract.name]['Date'] == current_date]
                 if rows_for_current_date.empty:
                     previous_date = current_date - timedelta(days=1)
@@ -99,13 +103,13 @@ def main():
                         percentage_change = ((rows_for_current_date['Close'].iloc[0] - contract.purchasePrice) / rows_for_current_date['Close'].iloc[0]) * 100
                         trader.percentGains.append(percentage_change)
                         trader.balance += (rows_for_current_date['Close'].iloc[0] - contract.purchasePrice) * contract.contractSize * contract.numContracts
-                        currentMonthGains += percentage_change
+                        averages.append(percentage_change)
                     else:
                         percentage_change = ((contract.purchasePrice - rows_for_current_date['Close'].iloc[0]) / rows_for_current_date['Close'].iloc[0]) * 100
                         trader.percentGains.append(percentage_change)
                         trader.balance += (contract.purchasePrice - rows_for_current_date['Close'].iloc[0]) * contract.contractSize * contract.numContracts
-                        currentMonthGains += percentage_change
-
+                        averages.append(percentage_change)
+            currentMonthGains += statistics.mean(averages) if len(averages) > 0 else 0
             if current_date.month != previous_month:
                 print(f"A month has passed: {current_date.strftime('%B %Y')}")
                 monthlyGains.append(currentMonthGains)
@@ -140,9 +144,9 @@ def main():
                     
                     if probs[0][0] >= 0.55 or probs[0][0] <= 0.45:
                         if predictions == 1:
-                            trader.contractsQueue.append(Contract(rows_for_current_date['Close'].iloc[0], "LONG", trader.balance * 0.25 // contractMargins[key], contractSize[key], key))
+                            trader.contractsQueue.append(Contract(rows_for_current_date['Close'].iloc[0], "LONG", 10000 // contractMargins[key], contractSize[key], key))
                         else:
-                            trader.contractsQueue.append(Contract(rows_for_current_date['Close'].iloc[0], "SHORT", trader.balance * 0.25 // contractMargins[key], contractSize[key], key))
+                            trader.contractsQueue.append(Contract(rows_for_current_date['Close'].iloc[0], "SHORT", 10000 // contractMargins[key], contractSize[key], key))
             print(trader.balance)
         # Move to the next date
         current_date += pd.DateOffset(days=1)  # Increment by one day

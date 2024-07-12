@@ -1,4 +1,4 @@
-COMMODITY_KEY = "COPPER" # Always all caps
+COMMODITY_KEY = "NATURALGAS" # Always all caps
 
 COMMODITY_TO_PRICE_FILE_MAP = {
     "GOLD": "GoldPrices.csv",
@@ -44,7 +44,7 @@ COMMODITY_TO_FEATURE_PROFILES_MAP = {
         # COT Data
         'Pct_of_OI_Prod_Merc_Long_All': 0,
         'Pct_of_OI_Prod_Merc_Short_All': 0,
-        'Pct_of_OI_M_Money_Long_All': 0,
+        'Pct_of_OI_M_Money_Long_All': 1,
         'Pct_of_OI_M_Money_Short_All': 0,
         'Pct_of_OI_M_Money_Spread_All': 0,
         'Pct_of_OI_Swap_Long_All': 0,
@@ -81,10 +81,10 @@ COMMODITY_TO_FEATURE_PROFILES_MAP = {
 
         'Change_in_Open_Interest_All': 0,
         'Change_in_Prod_Merc_Long_All': 1,
-        'Change_in_Prod_Merc_Short_All': 0,
+        'Change_in_Prod_Merc_Short_All': 1,
         'Change_in_M_Money_Long_All': 1,
-        'Change_in_M_Money_Short_All': 0,
-        'Change_in_M_Money_Spread_All': 0,
+        'Change_in_M_Money_Short_All': 1,
+        'Change_in_M_Money_Spread_All': 1,
         'Change_in_Swap_Long_All': 0,
         'Change_in_Swap_Short_All': 0,
         'Change_in_Swap_Spread_All': 0,
@@ -100,7 +100,7 @@ COMMODITY_TO_FEATURE_PROFILES_MAP = {
         'Signal Line': 1,
         'Upper Band': 0,
         'Lower Band' : 0,
-        'RSI_LONG': 1,
+        'RSI_LONG': 0,
 
         # Currencies
         'CloseDXY': 0,
@@ -141,12 +141,12 @@ COMMODITY_TO_FEATURE_PROFILES_MAP = {
         'Open_Interest_All': 0,
         'Prod_Merc_Positions_Long_ALL': 0,
         'Prod_Merc_Positions_Short_ALL': 0,
-        'M_Money_Positions_Long_ALL': 0,
+        'M_Money_Positions_Long_ALL': 1,
         'M_Money_Positions_Short_ALL': 0,
-        'M_Money_Positions_Spread_ALL': 0,
+        'M_Money_Positions_Spread_ALL': 1,
         'Swap_Positions_Long_All': 0,
         'Swap__Positions_Short_All': 0,
-        'Swap__Positions_Spread_All': 0,
+        'Swap__Positions_Spread_All': 1,
         'Other_Rept_Positions_Long_ALL': 0,
         'Other_Rept_Positions_Short_ALL': 0,
         'Other_Rept_Positions_Spread_ALL': 0,
@@ -240,9 +240,9 @@ COMMODITY_TO_FEATURE_PROFILES_MAP = {
         'RSI': 1,
         'MACD': 1,
         'Signal Line': 1,
-        'Upper Band': 0,
-        'Lower Band' : 0,
-        'RSI_LONG': 1,
+        'Upper Band': 1,
+        'Lower Band' : 1,
+        'RSI_LONG': 0,
 
         # Currencies
         'CloseDXY': 0,
@@ -268,11 +268,11 @@ COMMODITY_TO_FEATURE_PROFILES_MAP = {
         'Pct_of_OI_Other_Rept_Short_All': 0,
         'Pct_of_OI_Other_Rept_Spread_All': 0,
 
-        'Percent_PMPU_Long': 0,
+        'Percent_PMPU_Long': 1,
         'Percent_PMPU_Short': 0,
         'Percent_MM_Long': 0,
         'Percent_MM_Short': 0,
-        'Percent_MM_Spread': 0,
+        'Percent_MM_Spread': 1,
         'Percent_SWAP_Long': 1,
         'Percent_SWAP_Short': 0,
         'Percent_SWAP_Spread': 0,
@@ -299,10 +299,10 @@ COMMODITY_TO_FEATURE_PROFILES_MAP = {
         'Change_in_M_Money_Long_All': 1,
         'Change_in_M_Money_Short_All': 0,
         'Change_in_M_Money_Spread_All': 1,
-        'Change_in_Swap_Long_All': 1,
+        'Change_in_Swap_Long_All': 0,
         'Change_in_Swap_Short_All': 0,
-        'Change_in_Swap_Spread_All': 1,
-        'Change_in_Other_Rept_Long_All': 1,
+        'Change_in_Swap_Spread_All': 0,
+        'Change_in_Other_Rept_Long_All': 0,
         'Change_in_Other_Rept_Short_All': 0,
         'Change_in_Other_Rept_Spread_All': 1}
 

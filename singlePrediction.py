@@ -5,11 +5,20 @@ import sys
 sys.path.append('Training')
 from config import COMMODITY_TO_FEATURE_PROFILES_MAP
 
-models = {
+FULL = True
+
+if (FULL):
+    models = {
+            "GOLD": joblib.load('Models/fullGoldModel.pkl'),
+            "COPPER": joblib.load('Models/fullCopperModel.pkl'),
+            "NATURALGAS": joblib.load('Models/fullNaturalGasModel.pkl'),
+    }
+else:
+    models = {
         "GOLD": joblib.load('Models/goldModel.pkl'),
         "COPPER": joblib.load('Models/copperModel.pkl'),
         "NATURALGAS": joblib.load('Models/naturalGasModel.pkl'),
-}
+    }
 
 datasets = {
     "GOLD": pd.read_csv('Training/BacktestData/GOLD_Backtest.csv'),
@@ -18,7 +27,8 @@ datasets = {
 }
 
 for key in ["GOLD","COPPER","NATURALGAS"]:
-    currentReport = datasets[key].iloc[[43]]
+    currentReport = datasets[key].iloc[[0]]
+    print(currentReport['Date'].iloc[0])
     commodityProfile = COMMODITY_TO_FEATURE_PROFILES_MAP[key]
     newDataDf = currentReport[[feature for feature in commodityProfile.keys() if commodityProfile[feature]]]
     probs = models[key].predict_proba(newDataDf)

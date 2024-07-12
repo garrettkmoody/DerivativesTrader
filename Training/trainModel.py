@@ -84,6 +84,10 @@ def main():
             model_file = 'currentModel.pkl'
             joblib.dump(rf_classifier, model_file)
 
+    rf_classifier = RandomForestClassifier(n_estimators=1000, random_state=42)
+    rf_classifier.fit(X, Y)
+    model_file = 'fullyTrainedModel.pkl'
+    joblib.dump(rf_classifier, model_file)
     # cv_scores = cross_val_score(rf_classifier, X, Y, cv=5)
     # print(cv_scores)
     # print(f"AVERAGE CV SCORE: {np.mean(cv_scores)}")
