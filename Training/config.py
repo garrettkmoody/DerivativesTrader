@@ -1,4 +1,4 @@
-COMMODITY_KEY = "NATURALGAS" # Always all caps
+COMMODITY_KEY = "GOLD" # Always all caps
 
 COMMODITY_TO_PRICE_FILE_MAP = {
     "GOLD": "GoldPrices.csv",
